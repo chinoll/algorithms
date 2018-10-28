@@ -32,6 +32,9 @@ public class table {
         printLine("name",maxlen - 1);
         printLine("n",maxlen2);
         printLine("m", maxlen3);
+        StdOut.print("\n");
+        for (int i = 0; i < maxlen + maxlen2 + maxlen3 + 30; i++)
+            StdOut.print("-");
         for(int i = 0;i < count;i++) {
             StdOut.print("\n|");
             printLine(name[i],maxlen - 1);
