@@ -14,7 +14,7 @@ public class smartdate {
       return iYear;
     }
     public String toString() {
-      return iMonth + "/" + iDay + "/" + iYear;
+      return Month() + "/" + Day() + "/" + Year();
     }
     private int Zeller() {
       int y = iYear;
@@ -26,7 +26,7 @@ public class smartdate {
       }
       int c = y / 100;
       int t = y - c * 100;
-      int week = (t + t / 4 +c / 4 - 2 * c + 26 * (m + 1) / 10 + d - 1);
+      int week = (t + t / 4 + c / 4 - 2 * c + 26 * (m + 1) / 10 + d - 1);
       if (week < 0)
         week += 7;
       week %= 7;
@@ -35,6 +35,19 @@ public class smartdate {
     public String DayOfTheWeek() {
       String[] Week = new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
       return Week[Zeller()];
+    }
+    public boolean equals(Object x) {
+      if (this == x)
+        return true;
+      if (x == null)
+        return true;
+      if (this.getClass() != x.getClass())
+        return false;
+      SmartDate that = (SmartDate)x;
+      if(this.iDay != that.iDay)  return false;
+      if(this.iMonth != that.iMonth)  return false;
+      if(this.iYear != that.iYear)  return false;
+      return true;
     }
     public SmartDate(int month,int day,int year) {
       if(month > 12 || month < 0 || day > 31 || day < 0 || year < 0)
@@ -67,16 +80,18 @@ public class smartdate {
           iDay = day;
           break;
         default:
-          throw new java.lang.IllegalArgumentException("Error");
+          throw new java.lang.IllegalArgumentException(day + "/" + month + "/" + year);
       }
     }
   }
   public static void main(String[] args) {
     //Test
     smartdate.SmartDate date = new smartdate.SmartDate(2,29,2000);
-    StdOut.print(date + " " + date.DayOfTheWeek() + "\n");
+    StdOut.print(date + " " + date.DayOfTheWeek() + " " + (new smartdate.SmartDate(3, 30, 2000)).equals(date) + "\n");
     date = new smartdate.SmartDate(3,31,2018);
-    StdOut.print(date + " " + date.DayOfTheWeek() + "\n");
+    StdOut.print(date + " " + date.DayOfTheWeek() + " " + (new smartdate.SmartDate(3, 31, 2018)).equals(date) + "\n");
+    date = new smartdate.SmartDate(4, 29, 2001);
+    StdOut.print(date + " " + date.DayOfTheWeek() + " " + date.equals(10) + "\n");
     try {
       new smartdate.SmartDate(29,2,2001);
     } catch(Exception e) {
